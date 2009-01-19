@@ -1,0 +1,2 @@
+1	dummy	dummy	WHITE	dummy	59	game00001.log	
+2	dummy	Human	BLACK	Human	44	game00002.log	
