@@ -38,6 +38,7 @@ public class BTBoard extends Board {
     /** Returns a deep copy of another board. */
     public BTBoard( BTBoard bb ) {
         System.arraycopy( bb.data, 0, this.data, 0, data.length );
+        System.arraycopy( bb.numPieces, 0, this.numPieces, 0, numPieces.length );
         this.turn = bb.turn;
         this.winner = bb.winner;
         this.turnCount = bb.turnCount;

@@ -1,2 +1,17 @@
 1	dummy	dummy	WHITE	dummy	59	game00001.log	
 2	dummy	Human	BLACK	Human	44	game00002.log	
+3	Human	fixed	BLACK	fixed	72	game00003.log	
+4	fixed	Human	BLACK	Human	48	game00004.log	
+5	Human	Human	BLACK	Human	84	game00005.log	
+6	Human	fixed	WHITE	Human	43	game00006.log	
+7	Human	Human	UNDECIDED	NOBODY	45	game00007.log	USER CANCEL
+8	Human	Human	UNDECIDED	NOBODY	12	game00008.log	USER CANCEL
+9	Human	fixed	WHITE	Human	43	game00009.log	
+10	Human	fixed	WHITE	Human	59	game00010.log	
+11	Human	fixed	WHITE	Human	71	game00011.log	
+12	Human	fixed	WHITE	Human	47	game00012.log	
+13	Human	Human	BLACK	Human	68	game00013.log	
+14	Human	Human	BLACK	Human	54	game00014.log	
+15	Human	Human	UNDECIDED	NOBODY	44	game00015.log	USER CANCEL
+16	Human	fixed	BLACK	fixed	14	game00016.log	
+19	Human	dummy	WHITE	Human	11	game00019.log	
