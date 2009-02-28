@@ -15,3 +15,9 @@
 15	Human	Human	UNDECIDED	NOBODY	44	game00015.log	USER CANCEL
 16	Human	fixed	BLACK	fixed	14	game00016.log	
 19	Human	dummy	WHITE	Human	11	game00019.log	
+21	icioba1	Human	BLACK	Human	0	game00021.log	TIMEOUT WHITE
+22	icioba1	Human	BLACK	Human	0	game00022.log	TIMEOUT WHITE
+23	icioba1	Human	BLACK	Human	0	game00023.log	TIMEOUT WHITE
+24	icioba1	Human	BLACK	Human	0	game00024.log	TIMEOUT WHITE
+25	icioba1	Human	BLACK	Human	0	game00025.log	TIMEOUT WHITE
+26	icioba1	Human	BLACK	Human	0	game00026.log	TIMEOUT WHITE
