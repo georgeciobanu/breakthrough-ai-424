@@ -82,7 +82,8 @@ public class BTFixedPlayer extends Player {
 	    }
 	}
 
-	if(next == 0) throw new IllegalArgumentException( "No valid moves found!" );
+	if(next == 0) 
+		throw new IllegalArgumentException( "No valid moves found!" );
 	
 	// Sort the pieces by their row, and then distance from the 5th column. This is 
 	// a stable sort, so the order of "equal" pieces is well defined by their
