@@ -52,7 +52,7 @@ import java.awt.EventQueue;
 public class Server implements Runnable {
     protected static final String VERSION = "0.04";
     protected static final int DEFAULT_PORT = 8123;
-    protected static final int DEFAULT_TIMEOUT = 5000;
+    protected static final int DEFAULT_TIMEOUT = 500000;
     protected static final String DEFAULT_BOARDCLASS = "breakthrough.BTBoard";
     
     protected static final boolean DBGNET = false;
@@ -235,7 +235,8 @@ public class Server implements Runnable {
         // and then exit.
         boolean ownSocket = false;
         try {
-            hostname = InetAddress.getLocalHost().getCanonicalHostName();
+        	hostname = "localhost";
+            //hostname = InetAddress.getLocalHost().getCanonicalHostName();
             ServerSocket ss;
             synchronized(this) {
                 if( svrSock == null ) {
