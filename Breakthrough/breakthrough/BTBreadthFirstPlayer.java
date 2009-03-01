@@ -73,7 +73,7 @@ public class BTBreadthFirstPlayer extends Player {
 		int val = -999;
 		int maxVal = -999;
 		
-		if (depth < 7){
+		if (depth < 4){
 			if (moveColor == myColor){
 				for (int i = 0; i < myPieces.length; i++) {
 					for (int dir = -1; dir <= 1; dir++){
