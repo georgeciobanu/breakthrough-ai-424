@@ -13,12 +13,12 @@ import breakthrough.BTFixedPlayer;
 /**
  *A random BreakThrough player.
  */
-public class BTBreadthFirstPlayer extends Player {
+public class BTDepthFirstPlayer extends Player {
 
 	final int UNASSIGNED_MOVE = -999;
 	
 	/** Provide a default public constructor */
-	public BTBreadthFirstPlayer() { 
+	public BTDepthFirstPlayer() { 
 		super("icioba1");
 		
 

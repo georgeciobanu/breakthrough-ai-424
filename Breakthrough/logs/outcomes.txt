@@ -21,3 +21,38 @@
 24	icioba1	Human	BLACK	Human	0	game00024.log	TIMEOUT WHITE
 25	icioba1	Human	BLACK	Human	0	game00025.log	TIMEOUT WHITE
 26	icioba1	Human	BLACK	Human	0	game00026.log	TIMEOUT WHITE
+27	icioba1	Human	BLACK	Human	0	game00027.log	TIMEOUT WHITE
+28	icioba1	Human	BLACK	Human	0	game00028.log	TIMEOUT WHITE
+29	icioba1	fixed	BLACK	fixed	0	game00029.log	ILLEGAL MOVE: WHITE @1 -> @1
+30	icioba1	Human	BLACK	Human	0	game00030.log	ILLEGAL MOVE: WHITE @1 -> @1
+31	icioba1	Human	BLACK	Human	0	game00031.log	DISCONNECTION WHITE
+32	icioba1	icioba1	WHITE	icioba1	0	game00032.log	DISCONNECTION BLACK
+34	icioba1	Human	BLACK	Human	0	game00034.log	DISCONNECTION WHITE
+37	icioba1	Human	BLACK	Human	10	game00037.log	DISCONNECTION WHITE
+39	icioba1	Human	WHITE	icioba1	19	game00039.log	
+40	icioba1	Human	UNDECIDED	NOBODY	1	game00040.log	USER CANCEL
+41	icioba1	fixed	BLACK	fixed	90	game00041.log	
+42	icioba1	dummy	WHITE	icioba1	11	game00042.log	
+43	icioba1	fixed	BLACK	fixed	90	game00043.log	
+44	icioba1	fixed	BLACK	fixed	90	game00044.log	
+45	fixed	icioba1	BLACK	icioba1	86	game00045.log	
+46	fixed	icioba1	BLACK	icioba1	86	game00046.log	
+47	fixed	icioba1	BLACK	icioba1	86	game00047.log	
+49	fixed	icioba1	WHITE	fixed	3	game00049.log	DISCONNECTION BLACK
+50	fixed	icioba1	BLACK	icioba1	72	game00050.log	
+51	icioba1	fixed	BLACK	fixed	18	game00051.log	ILLEGAL MOVE: WHITE F1 -> E2
+52	icioba1	fixed	BLACK	fixed	18	game00052.log	ILLEGAL MOVE: WHITE F1 -> E2
+53	icioba1	fixed	UNDECIDED	NOBODY	12	game00053.log	USER CANCEL
+54	icioba1	fixed	BLACK	fixed	18	game00054.log	DISCONNECTION WHITE
+55	icioba1	fixed	BLACK	fixed	18	game00055.log	ILLEGAL MOVE: WHITE F1 -> E2
+56	icioba1	fixed	BLACK	fixed	18	game00056.log	ILLEGAL MOVE: WHITE F1 -> E2
+57	icioba1	fixed	BLACK	fixed	18	game00057.log	ILLEGAL MOVE: WHITE F1 -> E2
+58	icioba1	fixed	BLACK	fixed	18	game00058.log	ILLEGAL MOVE: WHITE F1 -> E2
+59	icioba1	fixed	BLACK	fixed	18	game00059.log	ILLEGAL MOVE: WHITE F1 -> E2
+60	icioba1	fixed	BLACK	fixed	18	game00060.log	ILLEGAL MOVE: WHITE F1 -> E2
+61	icioba1	fixed	UNDECIDED	NOBODY	18	game00061.log	USER CANCEL
+62	icioba1	fixed	BLACK	fixed	24	game00062.log	
+63	fixed	icioba1	WHITE	fixed	51	game00063.log	
+64	icioba1	fixed	BLACK	fixed	24	game00064.log	
+65	icioba1	fixed	BLACK	fixed	24	game00065.log	
+66	icioba1	icioba1	BLACK	icioba1	102	game00066.log	
