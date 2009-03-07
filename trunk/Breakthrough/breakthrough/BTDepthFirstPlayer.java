@@ -1,5 +1,6 @@
 package breakthrough;
 
+import java.util.Hashtable;
 import java.util.Random;
 
 import com.sun.org.apache.xpath.internal.compiler.OpCodes;
@@ -16,6 +17,8 @@ import breakthrough.BTFixedPlayer;
 public class BTDepthFirstPlayer extends Player {
 
 	final int UNASSIGNED_MOVE = -999;
+	final float WIN = 1, LOSE = -1;
+	
 	
 	/** Provide a default public constructor */
 	public BTDepthFirstPlayer() { 
@@ -63,15 +66,16 @@ public class BTDepthFirstPlayer extends Player {
 		return nextMove;
 	}
 
-	private int gen_move(BTBoard board, int myColor, int moveColor, int depth, BTMove bestMove)
+	private float gen_move(BTBoard board, int myColor, int moveColor, int depth, BTMove bestMove)
 	{
 		int forward = (myColor == BTBoard.WHITE ? 1 : -1);
 		int opColor = (myColor == BTBoard.WHITE) ? BTBoard.BLACK : BTBoard.WHITE;
 
 		int[][] myPieces = getPieces(board, myColor);
+		Hashtable<String,String> mine = new Hashtable<String, String>();
 				
-		int val = -999;
-		int maxVal = -999;
+		float val = -999;
+		float maxVal = -999;
 		
 		if (depth < 4){
 			if (moveColor == myColor){
@@ -94,33 +98,25 @@ public class BTDepthFirstPlayer extends Player {
 							newBoard.move(m);
 							
 							val = eval_board(newBoard);
-							
-							switch (val){
-								case 1: {
+														
+							if (val == WIN){
 									if (depth == 0){								
 										bestMove.fromString(m.toPrettyString());
-										if (m.toPrettyString().equals("WHITE F1 -> E2"))
-											System.out.println("Serious Warning");
 									}
-								};break;
-								case -1:{
+								}
+							else if (val == LOSE){
 									if (bestMove.player == UNASSIGNED_MOVE && depth == 0)
-										bestMove.fromString( m.toString() );
-									if (m.toPrettyString().equals("WHITE F1 -> E2"))
-										System.out.println("Serious Warning");
-								}; break; 
-								default: {
+										bestMove.fromString( m.toString() );																	
+							}else{
+								
 									val = gen_move(newBoard, myColor, opColor, depth+1, bestMove);
 									
-									if ((val > maxVal || bestMove.player == UNASSIGNED_MOVE) && depth == 0)
-										if (m.toPrettyString().equals("WHITE F1 -> E2"))
-											System.out.println("Serious Warning");
+									if ((val > maxVal || bestMove.player == UNASSIGNED_MOVE) && depth == 0)									
 										bestMove.fromString( m.toTransportable() );																	
-								}
-							}																												
+								}																																			
 						}						
 					}
-					if (val == 1) //No need to look for other moves if we found a winning position
+					if (val == WIN) //No need to look for other moves if we found a winning position
 						break;
 				}
 				if (bestMove.toPrettyString().equals("WHITE F1 -> E2") && depth == 0 && !board.isLegal(bestMove) )
@@ -130,7 +126,7 @@ public class BTDepthFirstPlayer extends Player {
 			else
 			{
 				val = eval_board(board); 
-				if ( val == 1 || val == -1)
+				if ( val == WIN || val == LOSE)
 					return val;
 				
 				//play the opponent
@@ -155,6 +151,9 @@ public class BTDepthFirstPlayer extends Player {
 
 	private int eval_board(BTBoard board)
 	{
+		//if winning return 1
+		//if losing return -1
+		//otherwise evaluate board and return the value
 		return 0;
 	}
 
