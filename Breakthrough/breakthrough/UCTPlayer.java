@@ -55,7 +55,7 @@ public class UCTPlayer extends Player {
 
 		MyNode root = new MyNode(board);				
 		
-		long simulations = 29;
+		long simulations = 600;
 		root.setVisits(simulations);
 		UCTSimulateNTimes(root, simulations);
 			
@@ -110,7 +110,7 @@ public class UCTPlayer extends Player {
 
 	private MyNode UCTSelect(MyNode root) {
 		MyNode node, choice = null;
-		float maxUCB = -1;
+		double maxUCB = -1;
 		
 		for (int i = 0; i < root.getChildCount(); i++) {
 			node = (MyNode)root.getChildAt(i);
@@ -118,8 +118,12 @@ public class UCTPlayer extends Player {
 			//be it local or global
 			if (node.firstVisit())
 				return node;
-			else if (node.getUCBValue() > maxUCB)
+			
+			double currentUCB = node.getUCBValue(); 
+			if (currentUCB > maxUCB){
 				choice = node;			
+				maxUCB = currentUCB;
+			}
 		}
 		return choice;
 	}
