@@ -79,7 +79,7 @@ public class EnhancedBTBoard extends BTBoard {
 	public Vector<BTMove> GenerateMoves() {
 		final int forward = (turn == BTBoard.WHITE ? BTBoard.SIZE : -BTBoard.SIZE );
 
-		Vector<BTMove> moves = new Vector<BTMove>();
+		Vector<BTMove> moves = new Vector<BTMove>(10,10);
 
 		if (turn == EnhancedBTBoard.BLACK) {
 			// For each piece 
