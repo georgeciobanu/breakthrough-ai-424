@@ -46,9 +46,9 @@ public class UCTPlayer extends Player {
 
 	BTFixedPlayer otherPlayer = new BTFixedPlayer();
 
-	/** Implement a very stupid way of picking moves */
+	
 	public Move chooseMove(Board theboard) {
-
+		visitedTable.clear();
 		// Cast the arguments to the objects we want to work with
 		BTBoard btBoard = (BTBoard) theboard;
 
@@ -56,7 +56,7 @@ public class UCTPlayer extends Player {
 
 		MyNode root = new MyNode(board);
 
-		long simulations = 7000;
+		long simulations = 9000;
 		root.setVisits(simulations);
 		UCTSimulateNTimes(root, simulations);
 
@@ -68,7 +68,7 @@ public class UCTPlayer extends Player {
 			int destPos = ((MyNode)root.getChildAt(i)).getMove().dest;
 			
 			if (destColor == opColor){ //If it is a capture
-				if (board.getRow(destPos) > furthest){
+				if (board.getRow(destPos) > furthest){ // BUG BUG BUG
 					furthest = board.getRow(destPos);
 					best = ((MyNode)root.getChildAt(i)).getMove();
 				}
