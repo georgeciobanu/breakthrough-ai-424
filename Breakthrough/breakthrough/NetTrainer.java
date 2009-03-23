@@ -1,3 +1,5 @@
+package breakthrough;
+
 import breakthrough.*;
 import boardgame.*;
 import java.io.*;
