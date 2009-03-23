@@ -56,27 +56,35 @@ public class UCTPlayer extends Player {
 
 		MyNode root = new MyNode(board);
 
-		long simulations = 9000;
-		root.setVisits(simulations);
-		UCTSimulateNTimes(root, simulations);
-
 		BTMove best = null;
-		int furthest = -1;
+		int furthest = 9999;
 		
 		for (int i = 0; i <root.getChildCount(); i++){
 			int destColor = root.getBoard().getPieceAt( ((MyNode)root.getChildAt(i)).getMove().dest);
 			int destPos = ((MyNode)root.getChildAt(i)).getMove().dest;
 			
 			if (destColor == opColor){ //If it is a capture
-				if (board.getRow(destPos) > furthest){ // BUG BUG BUG
+				if (board.getRow(destPos) < furthest){ // 
 					furthest = board.getRow(destPos);
 					best = ((MyNode)root.getChildAt(i)).getMove();
 				}
 			}
-			if (best != null)
-				return best;
+			else{//if it is controlled by the opponent, try to not step in
+				
+			}
 			
+			
+			if (best != null)
+				return best;			
 		}
+		
+		long simulations = 9000;
+		root.setVisits(simulations);
+		UCTSimulateNTimes(root, simulations);
+
+	
+		
+		
 		return UCTSelect(root).getMove();
 	}
 
