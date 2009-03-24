@@ -88,72 +88,68 @@ public class NeuralNet {
 	public void train(double inputs[], double targetOutputs[],
 			double learningRate) {
 
-		boolean something = true;
-		while (something) {
+		int outputLayerIndex = activations.length - 1;
+		// For each input
+		for (int i = 0; i < inputs.length; i++) {
 
-			int outputLayerIndex = activations.length - 1;
-			// For each input
-			for (int i = 0; i < inputs.length; i++) {
+			// Initialize input layer
+			for (int j = 0; j < structure[0]; j++) {
+				activations[0][j] = inputs[j];
+			}
 
-				// Initialize input layer
-				for (int j = 0; j < structure[0]; j++) {
-					activations[0][j] = inputs[j];
-				}
-
-				// For each layer compute the activation
-				for (int l = 1; l < structure.length; l++) {
-					// For each neuron
-					for (int k = 0; k < structure[l]; k++) {
-						// For each neuron (or input) compute in
-						double ink = Double.NEGATIVE_INFINITY;
-						for (int t = 0; t < weights[l][k].length; t++) {
-							ink = weights[l][k][t] * activations[l - 1][t];
-						}
-						activations[l][k] = sigmoid(ink);
+			// For each layer compute the activation
+			for (int l = 1; l < structure.length; l++) {
+				// For each neuron
+				for (int k = 0; k < structure[l]; k++) {
+					// For each neuron (or input) compute in
+					double ink = Double.NEGATIVE_INFINITY;
+					for (int t = 0; t < weights[l][k].length; t++) {
+						ink = weights[l][k][t] * activations[l - 1][t];
 					}
+					activations[l][k] = sigmoid(ink);
 				}
+			}
 
-				// For each neuron in the output layer compute the error
-				for (int o = 0; o < structure[outputLayerIndex]; o++) {
-					// For each neuron in the previous layer compute in
-					double inm = Double.NEGATIVE_INFINITY;
-					for (int t = 0; t < weights[outputLayerIndex][o].length; t++) {
-						inm = weights[outputLayerIndex][o][t]
-								* activations[outputLayerIndex - 1][t];
+			// For each neuron in the output layer compute the error
+			for (int o = 0; o < structure[outputLayerIndex]; o++) {
+				// For each neuron in the previous layer compute in
+				double inm = Double.NEGATIVE_INFINITY;
+				for (int t = 0; t < weights[outputLayerIndex][o].length; t++) {
+					inm = weights[outputLayerIndex][o][t]
+							* activations[outputLayerIndex - 1][t];
+				}
+				errors[outputLayerIndex][o] = sigPrime(inm)
+						* (targetOutputs[o] - activations[outputLayerIndex][o]);
+			}
+
+			// For each layer before the output layer, backpropagate
+			for (int j = outputLayerIndex - 1; j > 0; j--) {
+				// For each node in the layer compute error
+				for (int l = 0; l < structure[j]; l++) {
+					// Compute inl
+					double inl = Double.NEGATIVE_INFINITY;
+					for (int t = 0; t < weights[j][l].length; t++) {
+						inl = weights[j][l][t] * activations[j][l];
 					}
-					errors[outputLayerIndex][o] = sigPrime(inm)
-							* (targetOutputs[o] - activations[outputLayerIndex][o]);
-				}
 
-				// For each layer before the output layer, backpropagate
-				for (int j = outputLayerIndex - 1; j > 0; j--) {
-					// For each node in the layer compute error
-					for (int l = 0; l < structure[j]; l++) {
-						// Compute inl
-						double inl = Double.NEGATIVE_INFINITY;
-						for (int t = 0; t < weights[j][l].length; t++) {
-							inl = weights[j][l][t] * activations[j][l];
-						}
+					// Compute error fraction for this neuron, based on
+					// upper-layer error
+					double frac = Double.NEGATIVE_INFINITY;
+					for (int p = 0; p < weights[j + 1].length; p++) {
+						frac = weights[j + 1][p][l] * errors[j][p];
+					}
 
-						// Compute error fraction for this neuron, based on
-						// upper-layer error
-						double frac = Double.NEGATIVE_INFINITY;
-						for (int p = 0; p < weights[j + 1].length; p++) {
-							frac = weights[j + 1][p][l] * errors[j][p];
-						}
+					errors[j][l] = sigPrime(inl) * frac;
 
-						errors[j][l] = sigPrime(inl) * frac;
-
-						// For each node in upper layer
-						for (int uppLNodeIndex = 0; uppLNodeIndex < structure[j + 1]; uppLNodeIndex++) {
-							weights[j + 1][uppLNodeIndex][l] += learningRate
-									* activations[j][l]
-									* errors[j + 1][uppLNodeIndex];
-						}
+					// For each node in upper layer
+					for (int uppLNodeIndex = 0; uppLNodeIndex < structure[j + 1]; uppLNodeIndex++) {
+						weights[j + 1][uppLNodeIndex][l] += learningRate
+								* activations[j][l]
+								* errors[j + 1][uppLNodeIndex];
 					}
 				}
 			}
-		}// End While
+		}
 
 		// ========= BEGIN SOLUTION ========= //
 
@@ -262,41 +258,67 @@ public class NeuralNet {
 	 * meant as a way to test this class. The network is written to the file
 	 * 'and-or-xor-net.txt'
 	 */
-	/*
-	 * public static void main( String argv[] ) { // Create a net with 2 inputs,
-	 * 3 outputs and 2 hidden units int structure[] = { 2, 2, 3 }; NeuralNet net =
-	 * new NeuralNet( structure ); // Create the training data to learn the AND,
-	 * OR and XOR functions // functions (outputs 0, 1 and 2 respectively).
-	 * double inputs[][] = { {0,0}, {0,1}, {1,0}, {1,1} }; double outputs[][] = {
-	 * {0,0,0}, {0,1,1}, {0,1,1}, {1,1,0} }; // Pick some parameters double
-	 * learningRate = 0.1; int numEpochs = 50; int samplesPerEpoch = 1000; // A
-	 * place to store the sum squared errors double sse[] = new double[3]; // Do
-	 * the training System.out.println( "Epoch\t\tRMS error (AND)\t\t\t" + "RMS
-	 * error (OR)\t\t\tRMS error (XOR)" ); System.out.println(
-	 * "-----\t\t---------------\t\t\t" + "--------------\t\t\t---------------" );
-	 * for( int epoch = 0; epoch < numEpochs; epoch++ ) { // Learn on the whole
-	 * training set for( int example = 0; example < samplesPerEpoch; example++ )
-	 * net.train(inputs[example%4], outputs[example%4], learningRate); //
-	 * Compute the error on the training set Arrays.fill( sse, 0 ); for( int
-	 * example = 0; example < inputs.length; example++ ) { double out[] =
-	 * net.query( inputs[example] ); for( int i = 0; i < 3; i++ ) sse[i] +=
-	 * (outputs[example][i] - out[i]) * (outputs[example][i] - out[i]); } //
-	 * Print some output System.out.print( epoch+1 ); for( int i = 0; i < 3; i++ )
-	 * System.out.print( "\t\t" + Math.sqrt( sse[i] / 4 ) ); System.out.print(
-	 * '\n' ); }
-	 * 
-	 * System.out.println( "=============================" ); // Save try {
-	 * net.save( "and-or-xor-net.txt" ); } catch (Exception e) {
-	 * e.printStackTrace(); return; } // Load NeuralNet net2 = null; try { net2 =
-	 * new NeuralNet( "and-or-xor-net.txt" ); } catch (Exception e) {
-	 * e.printStackTrace(); return; } // See if it still works
-	 * System.out.println( "=============================" );
-	 * System.out.println( " A \t B \tA AND B\t\t\tA OR B\t\t\tA XOR B" );
-	 * System.out.println( "---\t---\t-------\t\t\t------\t\t\t-------" ); for(
-	 * int example = 0; example < inputs.length; example++ ) { double out[] =
-	 * net2.query( inputs[example] ); System.out.println( inputs[example][0] +
-	 * "\t" + inputs[example][1] + "\t" + out[0] + "\t" + out[1] + "\t" + out[2] ); } }
-	 */
+
+	public static void main(String argv[]) { // Create a net with 2
+		// inputs,3 outputs and 2 hidden units
+		int structure[] = { 2, 2, 3 };
+		NeuralNet net = new NeuralNet(structure); // Create the training data
+													// to learn the
+		// AND,OR and XOR functions // functions (outputs 0, 1 and 2
+		// respectively).
+		double inputs[][] = { { 0, 0 }, { 0, 1 }, { 1, 0 }, { 1, 1 } };
+		double outputs[][] = { { 0, 0, 0 }, { 0, 1, 1 }, { 0, 1, 1 },
+				{ 1, 1, 0 } }; // Pick some parameters
+		double learningRate = 0.1;
+		int numEpochs = 50;
+		int samplesPerEpoch = 1000; // A place to store the sum squared errors
+		double sse[] = new double[3]; // Do the training
+		System.out.println("Epoch\t\tRMS error (AND)\t\t\t"
+				+ "RMS error (OR)\t\t\tRMS error (XOR)");
+		System.out.println("-----\t\t---------------\t\t\t"
+				+ "--------------\t\t\t---------------");
+		for (int epoch = 0; epoch < numEpochs; epoch++) { // Learn on the
+			// whole training set
+			for (int example = 0; example < samplesPerEpoch; example++)
+				net.train(inputs[example % 4], outputs[example % 4],
+						learningRate); // Compute the error on the training set
+			Arrays.fill(sse, 0);
+			for (int example = 0; example < inputs.length; example++) {
+				double out[] = net.query(inputs[example]);
+				for (int i = 0; i < 3; i++)
+					sse[i] += (outputs[example][i] - out[i])
+							* (outputs[example][i] - out[i]);
+			} // Print some output
+			System.out.print(epoch + 1);
+			for (int i = 0; i < 3; i++)
+				System.out.print("\t\t" + Math.sqrt(sse[i] / 4));
+			System.out.print('\n');
+		}
+
+		System.out.println("============================="); // Save
+		try {
+			net.save("and-or-xor-net.txt");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
+		} // Load
+		NeuralNet net2 = null;
+		try {
+			// net2 =
+			new NeuralNet("and-or-xor-net.txt");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
+		} // See if it still works
+		System.out.println("=============================");
+		System.out.println(" A \t B \tA AND B\t\t\tA OR B\t\t\tA XOR B");
+		System.out.println("---\t---\t-------\t\t\t------\t\t\t-------");
+		for (int example = 0; example < inputs.length; example++) {
+			double out[] = net2.query(inputs[example]);
+			System.out.println(inputs[example][0] + "\t" + inputs[example][1]
+					+ "\t" + out[0] + "\t" + out[1] + "\t" + out[2]);
+		}
+	}
 
 	// //////////////////////////////////////////////////////////////////
 	// ////// INPUT / OUTPUT METHODS
