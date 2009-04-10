@@ -1,10 +1,13 @@
 package breakthrough;
 
-import java.security.InvalidParameterException;
 import java.util.Vector;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
+@SuppressWarnings("serial")
+/**
+ * Class that implements a custom node 
+ */
 public class MyNode extends DefaultMutableTreeNode {
 
 	private long visits = 0, wins = 0;
@@ -23,6 +26,10 @@ public class MyNode extends DefaultMutableTreeNode {
 		return (EnhancedBTBoard) this.userObject;
 	}
 
+	/**
+	 * Generate all possible moves for this node.
+	 *
+	 */
 	public void createChildren() {
 		//go over all possible moves (!) in a specific order
 		//and for each move generate a board, create a node around it and
@@ -47,7 +54,10 @@ public class MyNode extends DefaultMutableTreeNode {
 		wins++;
 		
 	}
-	
+	/**
+	 * Computes the UCB1 value of the node.
+	 * @return UCB1 value
+	 */
 	public double getUCBValue(){
 		double TotalVisits = ((MyNode)getParent()).getVisits();
 		if (visits == 0)

@@ -1,12 +1,13 @@
 package breakthrough;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Hashtable;
 import java.util.Vector;
 
 import boardgame.Move;
-
+/**
+ * Board that keeps track of where each piece is.
+ * @author geo
+ *
+ */
 public class EnhancedBTBoard extends BTBoard {
 	Vector<MyPiece> blackPieces;
 
@@ -37,10 +38,13 @@ public class EnhancedBTBoard extends BTBoard {
 		
 		for (MyPiece piece : board.whitePieces) {
 			whitePieces.add(new MyPiece( piece.getPosition()));
-		}
-		
+		}		
 	}
 
+	/**
+	 * Initialize the initial board
+	 *
+	 */
 	public void initializePieceTables() {
 		for (int i = 0; i < 2 * SIZE; i++) {
 			MyPiece piece = new MyPiece(i);
@@ -53,6 +57,10 @@ public class EnhancedBTBoard extends BTBoard {
 		}
 	}
 
+	/**
+	 * Update pieces after a move.
+	 * @param board
+	 */
 	public void UpdatePieceTables(BTBoard board) {
 		for (int i = 0; i < BTBoard.SIZE; i++)
 			for (int j = 0; j < BTBoard.SIZE; j++)
@@ -72,7 +80,7 @@ public class EnhancedBTBoard extends BTBoard {
 	}
 
 	/**
-	 * 
+	 * Generate moves from the current position
 	 * @return A vector of all the legal moves for the current position. This
 	 *         takes into account whose turn it is
 	 */
