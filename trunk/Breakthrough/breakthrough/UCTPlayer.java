@@ -4,6 +4,8 @@ package breakthrough;
 import java.util.Calendar;
 import java.util.Hashtable;
 
+import javax.swing.tree.DefaultMutableTreeNode;
+
 import boardgame.Board;
 import boardgame.Move;
 import boardgame.Player;
@@ -58,9 +60,15 @@ public class UCTPlayer extends Player {
 		
 		root.createChildren();
 		
+
+		
 		//For some reason, UCT does not like to capture. So
-		//we have to patch it in that sense.
+		//we have to patch it in that sense.	
 		for (int i = 0; i <root.getChildCount(); i++){
+			//If winning move return 
+			if ( ((MyNode)root.getChildAt(i)).getBoard().winner == myColor)
+				return ((MyNode)root.getChildAt(i)).getMove();
+			
 			int destColor = root.getBoard().getPieceAt( ((MyNode)root.getChildAt(i)).getMove().dest);
 			int destPos = ((MyNode)root.getChildAt(i)).getMove().dest;
 			
@@ -79,7 +87,7 @@ public class UCTPlayer extends Player {
 		}
 						
 		//If not capture happened or was possible, run UCT
-		UCTSimulateNMilis(root, 4900);					
+		UCTSimulateNMilis(root, 4700);					
 		return UCTSelect(root).getMove();
 	}
 
@@ -134,6 +142,7 @@ public class UCTPlayer extends Player {
 		//"Backpropagate"
 		while (node.getParent() != null) {
 			node.addVisit();
+			
 			if (outcome == 1)
 				if (node.getMove().player == myColor)
 					node.addWin(); // If WON

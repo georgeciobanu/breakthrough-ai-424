@@ -51,8 +51,7 @@ public class MyNode extends DefaultMutableTreeNode {
 	}
 
 	public void addWin() {
-		wins++;
-		
+		wins++;				
 	}
 	/**
 	 * Computes the UCB1 value of the node.
@@ -62,7 +61,8 @@ public class MyNode extends DefaultMutableTreeNode {
 		double TotalVisits = ((MyNode)getParent()).getVisits();
 		if (visits == 0)
 			return -1;
-		return wins/TotalVisits + UCBConstant * Math.sqrt( 2*Math.log(TotalVisits) / visits);
+		 
+		return wins/visits + UCBConstant * Math.sqrt( 2*Math.log(TotalVisits) / visits);
 	}
 	
 	public boolean firstVisit(){
