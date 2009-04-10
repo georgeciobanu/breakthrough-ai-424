@@ -1,6 +1,7 @@
 package breakthrough;
 
 import java.util.AbstractList;
+import java.util.Calendar;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Random;
@@ -28,6 +29,7 @@ public class UCTPlayer extends Player {
 	public int myColor = -1, opColor = -1, forward = -10;
 
 	private Random rand = new Random();
+	private BTNeuralNetPlayer netPlayer = new BTNeuralNetPlayer(); 
 
 	/** Provide a default public constructor */
 	public UCTPlayer() {
@@ -59,6 +61,8 @@ public class UCTPlayer extends Player {
 		BTMove best = null;
 		int furthest = 9999;
 		
+		root.createChildren();
+		
 		for (int i = 0; i <root.getChildCount(); i++){
 			int destColor = root.getBoard().getPieceAt( ((MyNode)root.getChildAt(i)).getMove().dest);
 			int destPos = ((MyNode)root.getChildAt(i)).getMove().dest;
@@ -68,31 +72,37 @@ public class UCTPlayer extends Player {
 					furthest = board.getRow(destPos);
 					best = ((MyNode)root.getChildAt(i)).getMove();
 				}
-			}
-			else{//if it is controlled by the opponent, try to not step in
-				
-			}
+			}			
 			
 			
 			if (best != null)
-				return best;			
+				if (Math.random() > 0.1)
+					return best;			
 		}
 		
-		long simulations = 9000;
-		root.setVisits(simulations);
-		UCTSimulateNTimes(root, simulations);
-
-	
-		
+		long simulations = 0;
+		//root.setVisits(simulations);
+		simulations = UCTSimulateNMilis(root, 4500);
+		//System.out.println("Simulations: " + simulations);	
 		
 		return UCTSelect(root).getMove();
 	}
 
-	private void UCTSimulateNTimes(MyNode node, long count) {
-		for (long i = 0; i < count; i++) {
+	private long UCTSimulateNMilis(MyNode node, long milis) {
+		Calendar cal = Calendar.getInstance();
+		long start = cal.getTimeInMillis();
+		long sims = 0;
+		while (true){			
+			sims++;
+			node.setVisits(sims);
 			UCTSearch(node);
+			
+			if (Calendar.getInstance().getTimeInMillis() - start >= milis)
+				break;
 		}
+		return sims;
 	}
+	
 
 	private void UCTSearch(MyNode root) {
 
@@ -158,10 +168,8 @@ public class UCTPlayer extends Player {
 
 		while (board.getWinner() == EnhancedBTBoard.NOBODY) {
 			// generate moves
-			Vector<BTMove> moves = board.GenerateMoves();
-			// chose randomly one of them
-			int selectedMove = rand.nextInt(moves.size());
-			board.move(moves.get(selectedMove));
+						
+			board.move(netPlayer.chooseMove(board));
 
 			winner = board.getWinner();
 
